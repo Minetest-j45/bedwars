@@ -1,28 +1,28 @@
-bedraid.maps = minetest.deserialize(bedraid.storage:get_string("maps")) or {}
+jewelraid.maps = minetest.deserialize(jewelraid.storage:get_string("maps")) or {}
 
-minetest.register_privilege("bedraid_maps", {
+minetest.register_privilege("jewelraid_maps", {
 	description = "Player can manage maps.",
 })
 
-bedraid.map_exists = function(name)
-	for _, map in ipairs(bedraid.maps) do
+jewelraid.map_exists = function(name)
+	for _, map in ipairs(jewelraid.maps) do
 		if map.name == name then return true end
 	end
 	return false
 end
 
-bedraid.map_add = function(def)
-	table.insert(bedraid.maps, def)
+jewelraid.map_add = function(def)
+	table.insert(jewelraid.maps, def)
 end
 
-bedraid.map_remove = function(name)
-	for k, map in ipairs(bedraid.maps) do
-		if map.name == name then bedraid.maps[k] = nil end
+jewelraid.map_remove = function(name)
+	for k, map in ipairs(jewelraid.maps) do
+		if map.name == name then jewelraid.maps[k] = nil end
 	end
 end
 
-bedraid.get_map_by_name = function(name)
-	for _, map in ipairs(bedraid.maps) do
+jewelraid.get_map_by_name = function(name)
+	for _, map in ipairs(jewelraid.maps) do
 		if map.name == name then return map end
 	end
 end
@@ -30,10 +30,10 @@ end
 minetest.register_chatcommand("map_default", {
 	description = "Add map with default attribs",
 	params = "<name>",
-	privs = {bedraid_maps = true},
+	privs = {jewelraid_maps = true},
 	func = function(name, param)
 		if not param or param == "" then return false, "Invalid arguments" end
-		if bedraid.map_exists(param) then return false, "Map with same name already exists" end
+		if jewelraid.map_exists(param) then return false, "Map with same name already exists" end
 		local template = {
 			name = param,
 			red = "100,100,100",
@@ -49,7 +49,7 @@ minetest.register_chatcommand("map_default", {
 			mese3 = "100,100,100",
 			mese4 = "100,100,100",
 		}
-		bedraid.map_add(template)
+		jewelraid.map_add(template)
 		return true, "Map added, please modify the attributes now with /map_modify"
 	end,
 })
@@ -57,7 +57,7 @@ minetest.register_chatcommand("map_default", {
 minetest.register_chatcommand("map_modify", {
 	description = "Modify map attributes",
 	params = "<map_name> <attrib_name> [<x>,<y>,<z>]",
-	privs = {bedraid_maps = true},
+	privs = {jewelraid_maps = true},
 	func = function(name, param)
 		local map_name = param:split(" ")[1]
 		local key = param:split(" ")[2]
@@ -72,7 +72,7 @@ minetest.register_chatcommand("map_modify", {
 				break
 			end
 		end
-		bedwars.get_map_by_name(map_name)[key] = value or minetest.pos_to_string(minetest.get_player_by_name(name):get_pos())
+		jewelraid.get_map_by_name(map_name)[key] = value or minetest.pos_to_string(minetest.get_player_by_name(name):get_pos())
 		return true, "Attribute changed to current position"
 	end,
 })
@@ -80,7 +80,7 @@ minetest.register_chatcommand("map_modify", {
 minetest.register_chatcommand("map_add", {
 	description = "Add a map",
 	params = "<name> <red_x,red_y,red_z> <blue_x,blue_y,blue_z>",
-	privs = {bedraid_maps = true},
+	privs = {jewelraid_maps = true},
 	func = function(name, param)
 		local params = {}
 		local paramnames = {
@@ -92,8 +92,8 @@ minetest.register_chatcommand("map_add", {
 		for k, v in ipairs(param:split(" ")) do
 			params[paramnames[k]] = v
 		end
-		if bedraid.map_exists(params.name) then return false, "Map with same name already exists" end
-		bedraid.map_add(params)
+		if jewelraid.map_exists(params.name) then return false, "Map with same name already exists" end
+		jewelraid.map_add(params)
 		return true, "Map added"
 	end,
 })
@@ -101,10 +101,10 @@ minetest.register_chatcommand("map_add", {
 minetest.register_chatcommand("map_remove", {
 	description = "Remove a map",
 	params = "<name>",
-	privs = {bedraid_maps = true},
+	privs = {jewelraid_maps = true},
 	func = function(name, param)
 		if param == "" then return false, "Invalid arguments" end
-		bedraid.map_remove(param)
+		jewelraid.map_remove(param)
 		return true, "Map removed"
 	end,
 })
@@ -112,14 +112,14 @@ minetest.register_chatcommand("map_remove", {
 minetest.register_chatcommand("map_list", {
 	description = "List all maps",
 	params = "",
-	privs = {bedraid_maps = true},
+	privs = {jewelraid_maps = true},
 	func = function(name, param)
-		return true, dump(bedraid.maps)
+		return true, dump(jewelraid.maps)
 	end,
 })
 
 minetest.register_on_shutdown(function()
-	bedraid.storage:set_string("maps", minetest.serialize(bedraid.maps))
+	jewelraid.storage:set_string("maps", minetest.serialize(jewelraid.maps))
 end)
 
 local timer = 0
