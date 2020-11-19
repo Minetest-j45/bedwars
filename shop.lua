@@ -1,4 +1,4 @@
-jewelraid.upgrades = {red = {}, green = {}, blue = {}, yellow = {}}
+jewelraid.upgrades = {red = {}, blue = {}}
 
 jewelraid.item_shop_fs = "size[6,7]" ..
 "item_image_button[1,1;1,1;default:sword_steel;steelsword;]item_image_button[2,1;1,1;default:sword_diamond;diamondsword;]item_image_button[3,1;1,1;knockback:stick;kbstick;]" ..
