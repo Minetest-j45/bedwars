@@ -1,8 +1,8 @@
-bedraid.teams = {red = {}, blue = {}}
+jewelraid.teams = {red = {}, blue = {}}
 
-bedraid.get_biggest_team = function()
+jewelraid.get_biggest_team = function()
 	local teamnames = {"red", "blue"}
-	local lengths = {#bedraid.teams.red, #bedraid.teams.blue}
+	local lengths = {#jewelraid.teams.red, #jewelraid.teams.blue}
 	local greatest = 1
 	for k, v in ipairs(lengths) do
 		if v > greatest then greatest = v end
@@ -12,9 +12,9 @@ bedraid.get_biggest_team = function()
 	end
 end
 
-bedraid.get_smallest_team = function()
+jewelraid.get_smallest_team = function()
 	local teamnames = {"red", "blue"}
-	local lengths = {#bedraid.teams.red, #bedraid.teams.blue}
+	local lengths = {#jewelraid.teams.red, #jewelraid.teams.blue}
 	local smallest = 4
 	for k, v in ipairs(lengths) do
 		if v < smallest then smallest = v end
@@ -24,17 +24,17 @@ bedraid.get_smallest_team = function()
 	end
 end
 
-bedraid.assign_team = function(name)
-	local team = bedraid.get_smallest_team()
-	table.insert(bedraid.teams[team], name)
+jewelraid.assign_team = function(name)
+	local team = jewelraid.get_smallest_team()
+	table.insert(jewelraid.teams[team], name)
 	local player = minetest.get_player_by_name(name)
 	if player then
-		player:set_pos(minetest.string_to_pos(bedraid.get_map_by_name(bedraid.current_map)[bedraid.get_player_team(player:get_player_name())]))
+		player:set_pos(minetest.string_to_pos(jewelraid.get_map_by_name(jewelraid.current_map)[jewelraid.get_player_team(player:get_player_name())]))
 	end
 end
 
-bedraid.get_player_team = function(name)
-	for k, team in pairs(bedraid.teams) do
+jewelraid.get_player_team = function(name)
+	for k, team in pairs(jewelraid.teams) do
 		for _, pname in ipairs(team) do
 			if name == pname then return k end
 		end
@@ -42,21 +42,21 @@ bedraid.get_player_team = function(name)
 end
 
 minetest.register_on_joinplayer(function(player)
-	bedraid.assign_team(player:get_player_name())
-	bedraid.ui_update()
+	jewelraid.assign_team(player:get_player_name())
+	jewelraid.ui_update()
 end)
 
 minetest.register_on_leaveplayer(function(player)
-	local team = bedraid.teams[bedraid.get_player_team(player:get_player_name())]
+	local team = jewelraid.teams[jewelraid.get_player_team(player:get_player_name())]
 	for k, pname in ipairs(team) do
 		if player:get_player_name() == pname then team[k] = nil end
 	end
-	bedraid.ui_update()
+	jewelraid.ui_update()
 end)
 
-bedraid.get_team_by_pos = function(pos)
+jewelraid.get_team_by_pos = function(pos)
 	local pos_str = minetest.pos_to_string(pos)
-	local map = bedraid.get_map_by_name(bedraid.current_map)
+	local map = jewelraid.get_map_by_name(jewelraid.current_map)
 	local team_pos_table = {red = minetest.string_to_pos(map.red), blue = minetest.string_to_pos(map.blue)}
 	local diffs = {}
 	for team, teampos in pairs(team_pos_table) do
