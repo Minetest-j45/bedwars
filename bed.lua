@@ -1,7 +1,7 @@
-bedwars.beds = {red = true, green = true, blue = true, yellow = true}
+bedwars.beds = {red = true, blue = true}
 
 bedwars.str_to_colour = function(str)
-	local codes = {red = "#FF0000", green = "#00FF00", blue = "#0000FF", yellow = "#FFFF00"}
+	local codes = {red = "#FF0000", blue = "#0000FF"}
 	return codes[str]
 end
 
@@ -43,7 +43,7 @@ minetest.register_on_respawnplayer(function(player)
 		minetest.kick_player(player:get_player_name(), "You cannot respawn because your bed has been destroyed. Please wait for a new game to start.")
 		minetest.after(1, function()
 			local empty_teams = 0
-			local alive = {red = true, green = true, blue = true, yellow = true}
+			local alive = {red = true, blue = true}
 			for k, v in pairs(bedwars.teams) do
 				if #v == 0 then
 					empty_teams = empty_teams + 1
@@ -56,7 +56,7 @@ minetest.register_on_respawnplayer(function(player)
 					last_team = k
 				end
 			end
-			if empty_teams == 3 then
+			if empty_teams == 1 then
 				minetest.chat_send_all("Team " .. minetest.colorize(bedwars.str_to_colour(last_team), last_team) .. " has won!")
 				minetest.request_shutdown("Game has ended", false, 10) 
 			end
