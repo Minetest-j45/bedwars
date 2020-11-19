@@ -1,4 +1,4 @@
-minetest.register_craftitem("jewelraid:stick", {
+minetest.register_craftitem("jewelraid:kbstick", {
 	description = "Knockback stick",
 	inventory_image = "default_stick.png",
 })
