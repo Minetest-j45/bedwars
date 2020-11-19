@@ -1,6 +1,6 @@
-bedwars.huds = {}
+jewelraid.huds = {}
 
-bedwars.std_hud = {
+jewelraid.std_hud = {
 	hud_elem_type = "text",
 	position = {x = 0.85, y = 0.3},
 	offset = {x = 20, y = 20},
@@ -11,22 +11,22 @@ bedwars.std_hud = {
 }
 
 minetest.register_on_joinplayer(function(player)
-	bedwars.huds[player:get_player_name()] = player:hud_add(bedwars.std_hud)
-	minetest.after(1, bedwars.ui_update, nil)
+	jewelraid.huds[player:get_player_name()] = player:hud_add(jewelraid.std_hud)
+	minetest.after(1, jewelraid.ui_update, nil)
 end)
 
-bedwars.ui_update = function()
-	local redbed, bluebed
-	if bedwars.beds.red then redbed = "+" end
-	if bedwars.beds.blue then bluebed = "+" end
+jewelraid.ui_update = function()
+	local red, bluebed
+	if jewelraid.beds.red then redbed = "+" end
+	if jewelraid.beds.blue then bluebed = "+" end
 	
-	local text = "Current map: " .. bedwars.current_map .. "\n" ..
-	bedwars.next_event_msg[bedwars.event + 1] .. ": " .. tostring(math.floor(bedwars.events[bedwars.event + 1] - (bedwars.timer or 0))) .. "\n\n" ..
-	"R: " .. (redbed or #bedwars.teams.red) .. "\n" ..
-	"B: " .. (bluebed or #bedwars.teams.blue)
+	local text = "Current map: " .. jewelraid.current_map .. "\n" ..
+	jewelraid.next_event_msg[jewelraid.event + 1] .. ": " .. tostring(math.floor(jewelraid.events[jewelraid.event + 1] - (jewelraid.timer or 0))) .. "\n\n" ..
+	"R: " .. (redbed or #jewelraid.teams.red) .. "\n" ..
+	"B: " .. (bluebed or #jewelraid.teams.blue)
 	
 	local players = minetest.get_connected_players()
 	for _, player in ipairs(players) do
-		player:hud_change(bedwars.huds[player:get_player_name()], "text", text)
+		player:hud_change(jewelraid.huds[player:get_player_name()], "text", text)
 	end
 end
