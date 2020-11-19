@@ -1,20 +1,20 @@
-bedwars = {}
+jewelraid = {}
 
-bedwars.init = false
+jewelraid.init = false
 
-bedwars.storage = minetest.get_mod_storage()
+jewelraid.storage = minetest.get_mod_storage()
 
 local mp = minetest.get_modpath(minetest.get_current_modname())
 
-bedwars.log = function(msg)
+jewelraid.log = function(msg)
 	if not msg then return end
-	minetest.log("action", "[bedwars] " .. msg)
+	minetest.log("action", "[jewelraid] " .. msg)
 end
 
 dofile(mp .. "/map.lua")
 
 local maps = {}
-for _, map in ipairs(bedwars.maps) do
+for _, map in ipairs(jewelraid.maps) do
 	table.insert(maps, map.name)
 end
 
@@ -30,7 +30,7 @@ if #maps > 0 then
 	dofile(mp .. "/antibuild.lua")
 	
 	math.randomseed(os.clock())
-	bedwars.current_map = maps[math.random(1, #maps)]
+	jewelraid.current_map = maps[math.random(1, #maps)]
 	
 	minetest.register_on_joinplayer(function(player)
 		player:set_hp(20)
@@ -38,22 +38,22 @@ if #maps > 0 then
 			local itemstack = ItemStack("default:sword_stone")
 			player:set_wielded_item(itemstack)
 		end, player)
-		if not bedwars.init then
-			bedwars.init = true
-			bedwars.event_timer_start()
+		if not jewelraid.init then
+			jewelraid.init = true
+			jewelraid.event_timer_start()
 			minetest.clear_objects({mode = "quick"})
 			minetest.after(5, function(player)
-				for _, attr in pairs(bedwars.get_map_by_name(bedwars.current_map)) do
+				for _, attr in pairs(jewelraid.get_map_by_name(jewelraid.current_map)) do
 					local centre = minetest.string_to_pos(attr) or player:get_pos()
 					for x = centre.x - 30, centre.x + 30 do
 						for y = centre.y - 30, centre.y + 30 do
 							for z = centre.z - 30, centre.z + 30 do
 								local pos = {x = x, y = y, z = z}
 								local node = minetest.get_node(pos)
-								if bedwars.is_buyable_node(node) then
+								if jewelraid.is_buyable_node(node) then
 									minetest.set_node(pos, {name = "air"})
 								end
-								if node.name == "bedwars:chest" then
+								if node.name == "jewelraid:chest" then
 									minetest.get_inventory({type = "node", pos = pos}):set_list("tc", {})
 								end
 							end
