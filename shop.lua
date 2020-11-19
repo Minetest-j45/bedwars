@@ -1,11 +1,9 @@
 jewelraid.upgrades = {red = {}, blue = {}}
 
 jewelraid.item_shop_fs = "size[6,7]" ..
-"item_image_button[1,1;1,1;default:sword_steel;steelsword;]item_image_button[2,1;1,1;default:sword_diamond;diamondsword;]item_image_button[3,1;1,1;knockback:stick;kbstick;]" ..
-"item_image_button[1,2;1,1;bow:bow_empty;bow;]item_image_button[2,2;1,1;bow:arrow;arrow;]" ..
+"item_image_button[1,1;1,1;default:sword_steel;steelsword;]item_image_button[3,1;1,1;jewelraid:kbstick;kbstick;]" ..
 "item_image_button[1,3;1,1;default:apple;apple;]item_image_button[2,3;1,1;tnt:tnt;tnt;]item_image_button[3,3;1,1;default:pick_steel;steelpick;]item_image_button[4,3;1,1;default:pick_diamond;diamondpick;]" ..
-"item_image_button[1,4;1,1;wool:white;wool;]item_image_button[2,4;1,1;default:obsidian;obsidian;]item_image_button[3,4;1,1;default:wood;wood;]item_image_button[4,4;1,1;default:axe_steel;steelaxe;]" ..
-"item_image_button[1,5;1,1;potions:speed;speedpotion;]item_image_button[2,5;1,1;potions:jump;jumppotion;]item_image_button[3,5;1,1;potions:antigravity;antigravitypotion;]"
+"item_image_button[1,5;1,1;jewelraid:speed;speedpotion;]item_image_button[2,5;1,1;jewelraid:jump;jumppotion;]item_image_button[3,5;1,1;jewelraid:antigravity;antigravitypotion;]"
 
 minetest.register_node("jewelraid:shop_item", {
 	description = "Item shop",
@@ -42,52 +40,12 @@ minetest.register_node("jewelraid:shop_item", {
 			end
 			sender:get_inventory():remove_item("main", reqstack)
 			itemstack:set_count(1)
-			itemstack:set_name("default:sword_steel")
-		elseif fields.diamondsword then
-			reqstack:set_count(6)
-			reqstack:set_name("default:mese_crystal")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 6 mese to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("default:sword_diamond")
-		elseif fields.kbstick then
-			reqstack:set_count(10)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 10 gold to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("knockback:stick")
+			itemstack:set_name("jewelraid:kbstick")
 		elseif fields.bow then
 			reqstack:set_count(8)
 			reqstack:set_name("default:mese_crystal")
 			if not sender:get_inventory():contains_item("main", reqstack) then
 				minetest.chat_send_player(sender:get_player_name(), "You need 8 mese to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("bow:bow_empty")
-		elseif fields.arrow then
-			reqstack:set_count(4)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 4 gold to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(8)
-			itemstack:set_name("bow:arrow")
-		elseif fields.apple then
-			reqstack:set_count(2)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 2 gold to buy this item")
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
@@ -98,76 +56,6 @@ minetest.register_node("jewelraid:shop_item", {
 			reqstack:set_name("default:gold_ingot")
 			if not sender:get_inventory():contains_item("main", reqstack) then
 				minetest.chat_send_player(sender:get_player_name(), "You need 8 gold to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("tnt:tnt")
-		elseif fields.steelpick then
-			reqstack:set_count(10)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 10 gold to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("default:pick_steel")
-		elseif fields.diamondpick then
-			reqstack:set_count(24)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 24 gold to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("default:pick_diamond")
-		elseif fields.wool then
-			reqstack:set_count(4)
-			reqstack:set_name("default:steel_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 4 steel to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(16)
-			itemstack:set_name("wool:" .. jewelraid.get_player_team(sender:get_player_name()))
-		elseif fields.obsidian then
-			reqstack:set_count(4)
-			reqstack:set_name("default:mese_crystal")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 4 mese to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(4)
-			itemstack:set_name("default:obsidian")
-		elseif fields.wood then
-			reqstack:set_count(12)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 12 gold to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(16)
-			itemstack:set_name("default:wood")
-		elseif fields.steelaxe then
-			reqstack:set_count(24)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 24 gold to buy this item")
-				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("default:axe_steel")
-		elseif fields.speedpotion then
-			reqstack:set_count(3)
-			reqstack:set_name("default:mese_crystal")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 3 mese to buy this item")
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
