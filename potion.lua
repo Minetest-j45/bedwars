@@ -1,4 +1,4 @@
-minetest.register_craftitem("potions:speed", {
+minetest.register_craftitem("jewelraid:speed", {
 	description = "Speed potion",
 	inventory_image = "potion_speed.png",
 	stack_max = 1,
@@ -16,7 +16,7 @@ minetest.register_craftitem("potions:speed", {
 	end,
 })
 
-minetest.register_craftitem("potions:jump", {
+minetest.register_craftitem("jewelraid:jump", {
 	description = "Jump potion",
 	inventory_image = "potion_jump.png",
 	stack_max = 1,
@@ -34,7 +34,7 @@ minetest.register_craftitem("potions:jump", {
 	end,
 })
 
-minetest.register_craftitem("potions:antigravity", {
+minetest.register_craftitem("jewelraid:antigravity", {
 	description = "Anti-gravity potion",
 	inventory_image = "potion_antigravity.png",
 	stack_max = 1,
