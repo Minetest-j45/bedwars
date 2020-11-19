@@ -1,13 +1,13 @@
-bedwars.upgrades = {red = {}, green = {}, blue = {}, yellow = {}}
+jewelraid.upgrades = {red = {}, green = {}, blue = {}, yellow = {}}
 
-bedwars.item_shop_fs = "size[6,7]" ..
+jewelraid.item_shop_fs = "size[6,7]" ..
 "item_image_button[1,1;1,1;default:sword_steel;steelsword;]item_image_button[2,1;1,1;default:sword_diamond;diamondsword;]item_image_button[3,1;1,1;knockback:stick;kbstick;]" ..
 "item_image_button[1,2;1,1;bow:bow_empty;bow;]item_image_button[2,2;1,1;bow:arrow;arrow;]" ..
 "item_image_button[1,3;1,1;default:apple;apple;]item_image_button[2,3;1,1;tnt:tnt;tnt;]item_image_button[3,3;1,1;default:pick_steel;steelpick;]item_image_button[4,3;1,1;default:pick_diamond;diamondpick;]" ..
 "item_image_button[1,4;1,1;wool:white;wool;]item_image_button[2,4;1,1;default:obsidian;obsidian;]item_image_button[3,4;1,1;default:wood;wood;]item_image_button[4,4;1,1;default:axe_steel;steelaxe;]" ..
 "item_image_button[1,5;1,1;potions:speed;speedpotion;]item_image_button[2,5;1,1;potions:jump;jumppotion;]item_image_button[3,5;1,1;potions:antigravity;antigravitypotion;]"
 
-minetest.register_node("bedwars:shop_item", {
+minetest.register_node("jewelraid:shop_item", {
 	description = "Item shop",
 	drawtype = "nodebox",
 	tiles = {"shop_item_side.png", "shop_item_side.png",  "shop_item_side.png",  "shop_item_side.png",  "shop_item_side.png", "shop_item_front.png"},
@@ -23,7 +23,7 @@ minetest.register_node("bedwars:shop_item", {
 	},
 	groups = {snappy = 3},
 	on_construct = function(pos)
-		minetest.get_meta(pos):set_string("formspec", bedwars.item_shop_fs)
+		minetest.get_meta(pos):set_string("formspec", jewelraid.item_shop_fs)
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local itemstack = ItemStack("")
@@ -132,7 +132,7 @@ minetest.register_node("bedwars:shop_item", {
 			end
 			sender:get_inventory():remove_item("main", reqstack)
 			itemstack:set_count(16)
-			itemstack:set_name("wool:" .. bedwars.get_player_team(sender:get_player_name()))
+			itemstack:set_name("wool:" .. jewelraid.get_player_team(sender:get_player_name()))
 		elseif fields.obsidian then
 			reqstack:set_count(4)
 			reqstack:set_name("default:mese_crystal")
@@ -199,11 +199,11 @@ minetest.register_node("bedwars:shop_item", {
 	end,
 })
 
-bedwars.team_shop_fs = "size[5,4]" ..
+jewelraid.team_shop_fs = "size[5,4]" ..
 "item_image_button[1,1;1,1;default:furnace;forge;]item_image_button[2,1;1,1;default:sword_steel;sharpness;]item_image_button[3,1;1,1;default:flint;dragonbuff;]" ..
 "item_image_button[1,2;1,1;default:brick;armour;]item_image_button[2,2;1,1;doors:trapdoor_steel;trap;]item_image_button[3,2;1,1;default:meselamp;healpool;]"
 
-minetest.register_node("bedwars:shop_team", {
+minetest.register_node("jewelraid:shop_team", {
 	description = "Team shop",
 	drawtype = "nodebox",
 	tiles = {"shop_team_side.png",  "shop_team_side.png",  "shop_team_side.png",  "shop_team_side.png",  "shop_team_side.png", "shop_team_front.png"},
@@ -219,7 +219,7 @@ minetest.register_node("bedwars:shop_team", {
 	},
 	groups = {snappy = 3},
 	on_construct = function(pos)
-		minetest.get_meta(pos):set_string("formspec", bedwars.team_shop_fs)
+		minetest.get_meta(pos):set_string("formspec", jewelraid.team_shop_fs)
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local wielded = sender:get_wielded_item()
@@ -227,22 +227,22 @@ minetest.register_node("bedwars:shop_team", {
 			minetest.chat_send_player(sender:get_player_name(), "Do not wield currency")
 			return
 		end
-		local team = bedwars.get_player_team(sender:get_player_name())
+		local team = jewelraid.get_player_team(sender:get_player_name())
 		local reqstack = ItemStack("default:diamond")
 		if fields.forge then
-			if (bedwars.upgrades[team].forge or 0) >= 4 then
+			if (jewelraid.upgrades[team].forge or 0) >= 4 then
 				minetest.chat_send_player(sender:get_player_name(), "The maximum forge upgrade is already active")
 				return
 			end
-			reqstack:set_count(4 * ((bedwars.upgrades[team].forge or 0) + 1))
+			reqstack:set_count(4 * ((jewelraid.upgrades[team].forge or 0) + 1))
 			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need " .. tostring(4 * ((bedwars.upgrades[team].forge or 0) + 1)) .. " diamonds to activate this upgrade")
+				minetest.chat_send_player(sender:get_player_name(), "You need " .. tostring(4 * ((jewelraid.upgrades[team].forge or 0) + 1)) .. " diamonds to activate this upgrade")
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
-			bedwars.upgrades[team].forge = (bedwars.upgrades[team].forge or 0) + 1
+			jewelraid.upgrades[team].forge = (jewelraid.upgrades[team].forge or 0) + 1
 		elseif fields.sharpness then
-			if bedwars.upgrades[team].sharpness then
+			if jewelraid.upgrades[team].sharpness then
 				minetest.chat_send_player(sender:get_player_name(), "The sharpness upgrade is already active")
 				return
 			end
@@ -252,9 +252,9 @@ minetest.register_node("bedwars:shop_team", {
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
-			bedwars.upgrades[team].sharpness = true
+			jewelraid.upgrades[team].sharpness = true
 		elseif fields.dragonbuff then
-			if bedwars.upgrades[team].dragonbuff then
+			if jewelraid.upgrades[team].dragonbuff then
 				minetest.chat_send_player(sender:get_player_name(), "The dragon buff upgrade is already active")
 				return
 			end
@@ -264,22 +264,22 @@ minetest.register_node("bedwars:shop_team", {
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
-			bedwars.upgrades[team].dragonbuff = true
+			jewelraid.upgrades[team].dragonbuff = true
 		elseif fields.armour then
-			if (bedwars.upgrades[team].armour or 0) >= 4 then
+			if (jewelraid.upgrades[team].armour or 0) >= 4 then
 				minetest.chat_send_player(sender:get_player_name(), "The maximum armour upgrade is already active")
 				return
 			end
 			local costs = {5, 10, 20, 30}
-			reqstack:set_count(costs[(bedwars.upgrades[team].armour or 0) + 1])
+			reqstack:set_count(costs[(jewelraid.upgrades[team].armour or 0) + 1])
 			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need " .. tostring(costs[(bedwars.upgrades[team].armour or 0) + 1]) .. " diamonds to activate this upgrade")
+				minetest.chat_send_player(sender:get_player_name(), "You need " .. tostring(costs[(jewelraid.upgrades[team].armour or 0) + 1]) .. " diamonds to activate this upgrade")
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
-			bedwars.upgrades[team].armour = (bedwars.upgrades[team].armour or 0) + 1
+			jewelraid.upgrades[team].armour = (jewelraid.upgrades[team].armour or 0) + 1
 		elseif fields.trap then
-			if bedwars.upgrades[team].trap then
+			if jewelraid.upgrades[team].trap then
 				minetest.chat_send_player(sender:get_player_name(), "The trap upgrade is already active")
 				return
 			end
@@ -289,9 +289,9 @@ minetest.register_node("bedwars:shop_team", {
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
-			bedwars.upgrades[team].trap = true
+			jewelraid.upgrades[team].trap = true
 		elseif fields.healpool then
-			if bedwars.upgrades[team].healpool then
+			if jewelraid.upgrades[team].healpool then
 				minetest.chat_send_player(sender:get_player_name(), "The healpool upgrade is already active")
 				return
 			end
@@ -301,7 +301,7 @@ minetest.register_node("bedwars:shop_team", {
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
-			bedwars.upgrades[team].healpool = true
+			jewelraid.upgrades[team].healpool = true
 		end
 		sender:set_wielded_item(wielded)
 	end,
@@ -314,12 +314,12 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
 end)
 
 minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, tool_capabilities, dir, damage)
-	if hitter:is_player() and bedwars.upgrades[bedwars.get_player_team(hitter:get_player_name())].sharpness then
-		player:set_hp(player:get_hp() - damage - 2 + (bedwars.upgrades[bedwars.get_player_team(player:get_player_name())].armour or 0))
+	if hitter:is_player() and jewelraid.upgrades[jewelraid.get_player_team(hitter:get_player_name())].sharpness then
+		player:set_hp(player:get_hp() - damage - 2 + (jewelraid.upgrades[jewelraid.get_player_team(player:get_player_name())].armour or 0))
 		return true
 	elseif not hitter:is_player() then
-		if player:get_hp() - damage + (bedwars.upgrades[bedwars.get_player_team(player:get_player_name())].armour or 0) < player:get_hp() then
-			player:set_hp(player:get_hp() - damage + (bedwars.upgrades[bedwars.get_player_team(player:get_player_name())].armour or 0))
+		if player:get_hp() - damage + (jewelraid.upgrades[jewelraid.get_player_team(player:get_player_name())].armour or 0) < player:get_hp() then
+			player:set_hp(player:get_hp() - damage + (jewelraid.upgrades[jewelraid.get_player_team(player:get_player_name())].armour or 0))
 			return true
 		end
 	end
@@ -331,14 +331,14 @@ minetest.register_abm({
 	interval = 1,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local team = bedwars.get_team_by_pos(pos)
-		if not bedwars.upgrades[team].trap then return end
+		local team = jewelraid.get_team_by_pos(pos)
+		if not jewelraid.upgrades[team].trap then return end
 		local objs = minetest.get_objects_inside_radius(pos, 7)
 		for _, obj in ipairs(objs) do
-			if obj:is_player() and bedwars.get_player_team(obj:get_player_name()) ~= team then
-				for _, name in ipairs(bedwars.teams[team]) do
+			if obj:is_player() and jewelraid.get_player_team(obj:get_player_name()) ~= team then
+				for _, name in ipairs(jewelraid.teams[team]) do
 					minetest.chat_send_player(name, "Your trap has been set off")
-					bedwars.upgrades[team].trap = false
+					jewelraid.upgrades[team].trap = false
 				end
 			end
 		end
@@ -351,11 +351,11 @@ minetest.register_abm({
 	interval = 6,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local team = bedwars.get_team_by_pos(pos)
-		if not bedwars.upgrades[team].healpool then return end
+		local team = jewelraid.get_team_by_pos(pos)
+		if not jewelraid.upgrades[team].healpool then return end
 		local objs = minetest.get_objects_inside_radius(pos, 7)
 		for _, obj in ipairs(objs) do
-			if obj:is_player() and bedwars.get_player_team(obj:get_player_name()) == team then
+			if obj:is_player() and jewelraid.get_player_team(obj:get_player_name()) == team then
 				obj:set_hp(obj:get_hp() + 1)
 			end
 		end
