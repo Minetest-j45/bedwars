@@ -85,4 +85,4 @@ if #maps > 0 then
 	end)
 end
 
-bedwars.log("Loaded mod")
+jewelraid.log("Loaded mod")
