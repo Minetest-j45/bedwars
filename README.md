@@ -1,2 +1,2 @@
-# bedwars
-Bedwars mod for Minetest
+# jewelraid
+Jewelraid mod for Minetest
