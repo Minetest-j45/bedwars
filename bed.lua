@@ -8,11 +8,6 @@ end
 minetest.register_on_dieplayer(function(player)
 	minetest.chat_send_all(minetest.colorize(jewelraid.str_to_colour(jewelraid.get_player_team(player:get_player_name())), player:get_player_name()) .. " died")
 	jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] = jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] - 1
-	if jewelraid.get_player_team(player:get_player_name()) == "red" then
-		jewelraid.beds.blue = jewelraid.beds.blue + 1
-	elseif jewelraid.get_player_team(player:get_player_name()) == "blue" then
-		jewelraid.beds.red = jewelraid.beds.red + 1
-	end
 end)
 
 minetest.register_on_respawnplayer(function(player)
