@@ -2,7 +2,7 @@ jewelraid.huds = {}
 
 jewelraid.std_hud = {
 	hud_elem_type = "text",
-	position = {x = 0.85, y = 0.3},
+	position = {x = 0.8, y = 0.3},
 	offset = {x = 20, y = 20},
 	text = "Current map: -",
 	alignment = {x = 1, y = 1},
