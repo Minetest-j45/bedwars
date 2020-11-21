@@ -15,7 +15,7 @@ end
 jewelraid.get_smallest_team = function()
 	local teamnames = {"red", "blue"}
 	local lengths = {#jewelraid.teams.red, #jewelraid.teams.blue}
-	local smallest = 4
+	local smallest = 2
 	for k, v in ipairs(lengths) do
 		if v < smallest then smallest = v end
 	end
