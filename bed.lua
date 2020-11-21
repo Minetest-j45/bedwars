@@ -50,3 +50,37 @@ minetest.register_on_joinplayer(function(player)
 		end
 	end)
 end)
+
+minetest.register_node("jewelraid:jewel", {
+   description = "Jewel",
+   tiles = {"jewel.png"},
+   wield_image = "jewel.png",
+})
+
+
+minetest.register_on_dignode(function(pos, oldnode, digger)
+	if oldnode.name == "jewelraid:jewel" then
+		minetest.set_node(pos, {name = "jewelraid:jewel"})
+		local inv = digger:get_inventory()
+		for k, v in pairs(inv:get_lists()) do
+			minetest.after(0, function(t)
+				local itemstack = ItemStack("jewelraid:jewel")
+				itemstack:set_count(99)
+				t.inv:remove_item(t.k, itemstack)
+			end, {k = k, inv = inv})
+		end
+		if jewelraid.get_team_by_pos(pos) == jewelraid.get_player_team(digger:get_player_name()) then
+			minetest.chat_send_player(digger:get_player_name(), "You can't destroy your own jewel")
+			return
+		end
+		if not jewelraid.beds[jewelraid.get_team_by_pos(pos)] then return end
+		jewelraid.beds[jewelraid.get_team_by_pos(pos)] = jewelraid.beds[jewelraid.get_team_by_pos(pos)] - 1
+		minetest.chat_send_all("Team " .. minetest.colorize(bedwars.str_to_colour(jewelraid.get_team_by_pos(pos)), jewelraid.get_team_by_pos(pos)) .. "'s jewel has been destroyed by " .. digger:get_player_name())
+		minetest.sound_play("bed_destruction", {
+			pos = pos,
+			max_hear_distance = 100,
+			gain = 2.0,
+		})
+		jewelraid.ui_update()
+	end
+end)
