@@ -1,8 +1,8 @@
 jewelraid.upgrades = {red = {}, blue = {}}
 
 jewelraid.item_shop_fs = "size[6,7]" ..
-"item_image_button[1,1;1,1;default:sword_steel;steelsword;]item_image_button[3,1;1,1;jewelraid:kbstick;kbstick;]" ..
-"item_image_button[1,3;1,1;default:apple;apple;]item_image_button[2,3;1,1;tnt:tnt;tnt;]item_image_button[3,3;1,1;default:pick_steel;steelpick;]item_image_button[4,3;1,1;default:pick_diamond;diamondpick;]" ..
+"item_image_button[3,1;1,1;jewelraid:kbstick;kbstick;]" ..
+"item_image_button[1,3;1,1;default:apple;apple;]item_image_button[3,3;1,1;default:pick_steel;steelpick;]" ..
 "item_image_button[1,5;1,1;jewelraid:speed;speedpotion;]item_image_button[2,5;1,1;jewelraid:jump;jumppotion;]item_image_button[3,5;1,1;jewelraid:antigravity;antigravitypotion;]"
 
 minetest.register_node("jewelraid:shop_item", {
@@ -56,6 +56,16 @@ minetest.register_node("jewelraid:shop_item", {
 			reqstack:set_name("default:gold_ingot")
 			if not sender:get_inventory():contains_item("main", reqstack) then
 				minetest.chat_send_player(sender:get_player_name(), "You need 8 gold to buy this item")
+				return
+			end
+			sender:get_inventory():remove_item("main", reqstack)
+			itemstack:set_count(1)
+			itemstack:set_name("default:pick_steel")
+		elseif fields.jumppotion then
+			reqstack:set_count(3)
+			reqstack:set_name("default:mese_crystal")
+			if not sender:get_inventory():contains_item("main", reqstack) then
+				minetest.chat_send_player(sender:get_player_name(), "You need 3 mese to buy this item")
 				return
 			end
 			sender:get_inventory():remove_item("main", reqstack)
