@@ -50,7 +50,7 @@ end)
 
 minetest.register_on_joinplayer(function(player)
 	minetest.after(1, function()
-		if jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] <= then
+		if jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] <= 0 then
 			minetest.kick_player(player:get_player_name(), "You cannot respawn because your bed has been destroyed. Please wait for a new game to start.")
 		end
 	end)
