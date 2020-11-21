@@ -37,17 +37,7 @@ minetest.register_chatcommand("map_default", {
 		local template = {
 			name = param,
 			red = "100,100,100",
-			green = "100,100,100",
 			blue = "100,100,100",
-			yellow = "100,100,100",
-			diamond1 = "100,100,100",
-			diamond2 = "100,100,100",
-			diamond3 = "100,100,100",
-			diamond4 = "100,100,100",
-			mese1 = "100,100,100",
-			mese2 = "100,100,100",
-			mese3 = "100,100,100",
-			mese4 = "100,100,100",
 		}
 		jewelraid.map_add(template)
 		return true, "Map added, please modify the attributes now with /map_modify"
