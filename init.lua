@@ -23,7 +23,6 @@ if #maps > 0 then
 	dofile(mp .. "/team.lua")
 	dofile(mp .. "/ui.lua")
 	dofile(mp .. "/bed.lua")
-	dofile(mp .. "/event.lua")
 	dofile(mp .. "/knockbackstick.lua")
 	dofile(mp .. "/potion.lua")
 	dofile(mp .. "/chest.lua")
