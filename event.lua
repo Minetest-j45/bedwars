@@ -9,7 +9,7 @@ jewelraid.event_timer_start = function()
 	jewelraid.timer = 0
 	minetest.register_globalstep(function(dtime)
 		jewelraid.timer = jewelraid.timer + dtime
-		if jewelraid.timer >= jewelraid.events[jewelraid.event + 1] then
+		if jewelraid.timer >= 3000 then
 			jewelraid.event = jewelraid.event + 1
 			minetest.chat_send_all(jewelraid.event_msg[jewelraid.event])
 			jewelraid.timer = 0
