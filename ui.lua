@@ -17,8 +17,8 @@ end)
 
 jewelraid.ui_update = function()
         local red, bluebed
-        if jewelraid.beds.red then redbed = tostring(#jewelraid.beds.red).."jewels" end
-        if jewelraid.beds.blue then bluebed = tostring(#jewelraid.beds.blue).."jewels" end
+        if jewelraid.beds.red then redbed = tostring(jewelraid.beds.red) .. " jewels" end
+        if jewelraid.beds.blue then bluebed = tostring(jewelraid.beds.blue) .. " jewels" end
 
 	local text = "Current map: " .. jewelraid.current_map .. "\n" ..
 	jewelraid.next_event_msg[jewelraid.event + 1] .. ": " .. tostring(math.floor(jewelraid.events[jewelraid.event + 1] - (jewelraid.timer or 0))) .. "\n\n" ..
