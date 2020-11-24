@@ -24,10 +24,10 @@ if #maps > 0 then
 	dofile(mp .. "/ui.lua")
 	dofile(mp .. "/bed.lua")
 	dofile(mp .. "/event.lua")
-	dofile(mp .. "/forge.lua")
-	dofile(mp .. "/dragon.lua")
+	dofile(mp .. "/knockbackstick.lua")
+	dofile(mp .. "/potion.lua")
 	dofile(mp .. "/chest.lua")
-	dofile(mp .. "/antibuild.lua")
+	dofile(mp .. "/removebuildplace.lua")
 	
 	math.randomseed(os.clock())
 	jewelraid.current_map = maps[math.random(1, #maps)]
