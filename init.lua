@@ -50,9 +50,6 @@ if #maps > 0 then
 							for z = centre.z - 30, centre.z + 30 do
 								local pos = {x = x, y = y, z = z}
 								local node = minetest.get_node(pos)
-								if jewelraid.is_buyable_node(node) then
-									minetest.set_node(pos, {name = "air"})
-								end
 								if node.name == "jewelraid:chest" then
 									minetest.get_inventory({type = "node", pos = pos}):set_list("tc", {})
 								end
