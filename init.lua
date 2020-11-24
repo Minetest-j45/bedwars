@@ -26,6 +26,7 @@ if #maps > 0 then
 	dofile(mp .. "/knockbackstick.lua")
 	dofile(mp .. "/potion.lua")
 	dofile(mp .. "/chest.lua")
+	dofile(mp .. "/event.lua")
 	dofile(mp .. "/removebuildplace.lua")
 	
 	math.randomseed(os.clock())
