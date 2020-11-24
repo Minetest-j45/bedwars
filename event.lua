@@ -1,4 +1,3 @@
-jewelraid.events = {3000}
 jewelraid.event_list = {"game_end"}
 jewelraid.event_msg = {
 	"Game has ended",
