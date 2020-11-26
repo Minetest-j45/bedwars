@@ -2,7 +2,7 @@ jewelraid.upgrades = {red = {}, blue = {}}
 
 jewelraid.item_shop_fs = "size[6,7]" ..
 "item_image_button[3,1;1,1;jewelraid:kbstick;kbstick;]" ..
-"item_image_button[1,3;1,1;default:apple;apple;]item_image_button[3,3;1,1;default:pick_steel;steelpick;]" ..
+"item_image_button[1,3;1,1;default:apple;apple;]item_image_button[3,3;1,1;default:pick_diamond;diamondpick;]" ..
 "item_image_button[1,5;1,1;jewelraid:speed;speedpotion;]item_image_button[2,5;1,1;jewelraid:jump;jumppotion;]item_image_button[3,5;1,1;jewelraid:antigravity;antigravitypotion;]"
 
 minetest.register_node("jewelraid:shop_item", {
@@ -60,7 +60,7 @@ minetest.register_node("jewelraid:shop_item", {
 			end
 			sender:get_inventory():remove_item("main", reqstack)
 			itemstack:set_count(1)
-			itemstack:set_name("default:pick_steel")
+			itemstack:set_name("default:pick_diamond")
 		elseif fields.jumppotion then
 			reqstack:set_count(3)
 			reqstack:set_name("default:mese_crystal")
@@ -98,7 +98,7 @@ minetest.register_node("jewelraid:shop_item", {
 })
 
 jewelraid.team_shop_fs = "size[5,4]" ..
-"item_image_button[1,1;1,1;default:furnace;forge;]item_image_button[2,1;1,1;default:sword_steel;sharpness;]item_image_button[3,1;1,1;default:flint;dragonbuff;]" ..
+"item_image_button[1,1;1,1;default:furnace;forge;]item_image_button[2,1;1,1;default:sword_;sharpness;]item_image_button[3,1;1,1;default:flint;dragonbuff;]" ..
 "item_image_button[1,2;1,1;default:brick;armour;]item_image_button[2,2;1,1;doors:trapdoor_steel;trap;]item_image_button[3,2;1,1;default:meselamp;healpool;]"
 
 minetest.register_node("jewelraid:shop_team", {
