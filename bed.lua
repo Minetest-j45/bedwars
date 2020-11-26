@@ -75,7 +75,7 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 		end
 		if not jewelraid.beds[jewelraid.get_team_by_pos(pos)] then return end
 		jewelraid.beds[jewelraid.get_team_by_pos(pos)] = jewelraid.beds[jewelraid.get_team_by_pos(pos)] - 1
-		minetest.chat_send_all("Team " .. minetest.colorize(bedwars.str_to_colour(jewelraid.get_team_by_pos(pos)), jewelraid.get_team_by_pos(pos)) .. "'s jewel has been destroyed by " .. digger:get_player_name())
+		minetest.chat_send_all("Team " .. minetest.colorize(jewelraid.str_to_colour(jewelraid.get_team_by_pos(pos)), jewelraid.get_team_by_pos(pos)) .. "'s jewel has been destroyed by " .. digger:get_player_name())
 		minetest.sound_play("bed_destruction", {
 			pos = pos,
 			max_hear_distance = 100,
