@@ -274,3 +274,15 @@ minetest.register_abm({
 		end
 	end,
 })
+
+local goldtimer = 0
+minetest.register_globalstep(function(dtime)
+    goldtimer = goldtimer + dtime;
+    if goldtimer >= 9 then
+        for _,player in ipairs(minetest.get_connected_players()) do
+           local itemstack = ItemStack("default:gold_ingot")
+           player:get_inventory():add_item("main", itemstack)
+           goldtimer = 0
+        end
+    end
+end)
