@@ -55,6 +55,21 @@ minetest.register_node("jewelraid:jewel", {
    description = "Jewel",
    tiles = {"jewel.png"},
    wield_image = "jewel.png",
+   on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+    local nodename = node.name
+    if nodename == "jewelraid:jewel" then
+      local posteam = jewelraid.get_team_by_pos(pos)
+      local placerteam = jewelraid.get_player_team(player:get_player_name())
+      if not posteam or not placerteam then return end
+      if posteam == placerteam then
+        jewelraid.beds[jewelraid.get_team_by_pos(pos)] = jewelraid.beds[jewelraid.get_team_by_pos(pos)] + 1
+        itemstack:take_item()
+        return itemstack
+      else
+        minetest.chat_send_player(player:get_player_name(), "You can't give the enemy more jewels!")
+      end
+    end
+   end,
 })
 
 
@@ -75,6 +90,7 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 		end
 		if not jewelraid.beds[jewelraid.get_team_by_pos(pos)] then return end
 		jewelraid.beds[jewelraid.get_team_by_pos(pos)] = jewelraid.beds[jewelraid.get_team_by_pos(pos)] - 1
+		minetest.add_item(pos, "jewelraid:jewel")
 		minetest.chat_send_all("Team " .. minetest.colorize(jewelraid.str_to_colour(jewelraid.get_team_by_pos(pos)), jewelraid.get_team_by_pos(pos)) .. "'s jewel has been destroyed by " .. digger:get_player_name())
 		minetest.sound_play("bed_destruction", {
 			pos = pos,
