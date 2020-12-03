@@ -55,9 +55,11 @@ minetest.register_node("jewelraid:jewel", {
    description = "Jewel",
    tiles = {"jewel.png"},
    wield_image = "jewel.png",
+   groups = {cracky =1},
    on_rightclick = function(pos, node, player, itemstack, pointed_thing)
     local nodename = node.name
-    if nodename == "jewelraid:jewel" then
+    if not nodename == "jewelraid:jewel" and not itemstack:get_name() == "jewelraid:jewel" then return end
+    if nodename == "jewelraid:jewel"  and itemstack:get_name() == "jewelraid:jewel" then
       local posteam = jewelraid.get_team_by_pos(pos)
       local placerteam = jewelraid.get_player_team(player:get_player_name())
       if not posteam or not placerteam then return end
