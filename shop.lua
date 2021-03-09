@@ -1,9 +1,9 @@
 jewelraid.upgrades = {red = {}, blue = {}}
 
-jewelraid.item_shop_fs = "size[6,7]" ..
-"item_image_button[3,1;1,1;jewelraid:kbstick;kbstick;]" ..
-"item_image_button[1,3;1,1;default:apple;apple;]item_image_button[3,3;1,1;default:pick_diamond;diamondpick;]" ..
-"item_image_button[1,5;1,1;jewelraid:speed;speedpotion;]item_image_button[2,5;1,1;jewelraid:jump;jumppotion;]item_image_button[3,5;1,1;jewelraid:antigravity;antigravitypotion;]"
+jewelraid.item_shop_fs = "size[2,3]" ..
+"item_image_button[0,0;1,1;jewelraid:kbstick;kbstick;]" ..
+"item_image_button[0,1;1,1;default:apple;apple;]item_image_button[0,2;1,1;default:pick_diamond;diamondpick;]" ..
+"item_image_button[1,0;1,1;jewelraid:speed;speedpotion;]item_image_button[1,1;1,1;jewelraid:jump;jumppotion;]item_image_button[1,2;1,1;jewelraid:antigravity;antigravitypotion;]"
 
 minetest.register_node("jewelraid:shop_item", {
 	description = "Item shop",
