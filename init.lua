@@ -35,8 +35,10 @@ if #maps > 0 then
 	minetest.register_on_joinplayer(function(player)
 		player:set_hp(20)
 		minetest.after(0, function(player)
+			local kbstick = ItemStack("jewelraid:kbstick1")
 			local itemstack = ItemStack("default:pick_steel")
-			player:set_wielded_item(itemstack)
+			player:set_wielded_item(kbstick)
+			player:get_inventory():add_item("main", itemstack)
 		end, player)
 		if not jewelraid.init then
 			jewelraid.init = true
