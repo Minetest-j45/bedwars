@@ -1,13 +1,13 @@
 minetest.register_craftitem("jewelraid:kbstick1", {
-	description = "Knockback stick",
+	description = "Knockback stick, Power:10",
 	inventory_image = "default_stick.png",
 })
 minetest.register_craftitem("jewelraid:kbstick2", {
-	description = "Knockback stick",
+	description = "Knockback stick, Power:15",
 	inventory_image = "default_stick.png",
 })
 minetest.register_craftitem("jewelraid:kbstick3", {
-	description = "Knockback stick",
+	description = "Knockback stick, Power:20",
 	inventory_image = "default_stick.png",
 })
 
