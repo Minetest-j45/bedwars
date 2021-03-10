@@ -11,8 +11,10 @@ minetest.register_on_dieplayer(function(player)
 end)
 
 minetest.register_on_respawnplayer(function(player)
+	local kbstick = ItemStack("jewelraid:kbstick1")
 	local itemstack = ItemStack("default:pick_steel")
-	player:set_wielded_item(itemstack)
+	player:set_wielded_item(kbstick)
+	player:get_inventory():add_item("main", itemstack)
 	if jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] <= 0 then
 		minetest.kick_player(player:get_player_name(), "You cannot respawn because your bed has been destroyed. Please wait for a new game to start.")
 		minetest.after(1, function()
