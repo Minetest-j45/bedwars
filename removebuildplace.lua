@@ -18,6 +18,7 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
 end)
 
 minetest.register_on_dignode(function(pos, oldnode, digger)
+	if oldnode.name == "jewelraid:jewel" then return end
 	if not digger then return end
 	if not digger:is_player() then return end
 	if not minetest.check_player_privs(digger:get_player_name(), {build = true}) then
