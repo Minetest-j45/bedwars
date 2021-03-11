@@ -32,15 +32,51 @@ minetest.register_node("jewelraid:shop_item", {
 		end
 		local reqstack = ItemStack("")
 		if fields.kbstick then
-			reqstack:set_count(8)
-			reqstack:set_name("default:gold_ingot")
-			if not sender:get_inventory():contains_item("main", reqstack) then
-				minetest.chat_send_player(sender:get_player_name(), "You need 8 gold to buy this item")
+            reqstack:set_count(8)
+            reqstack:set_name("default:gold_ingot")
+            if not sender:get_inventory():contains_item("main", reqstack) then
+                minetest.chat_send_player(sender:get_player_name(), "You need 8 gold to buy this item")
+                return
+            end
+			minetest.chat_send_all(wielded:get_name())
+            local kb1 = ItemStack("")
+            kb1:set_count(1)
+            kb1:set_name("jewelraid:kbstick1")
+
+            local kb2 = ItemStack("")
+            kb2:set_count(1)
+            kb2:set_name("jewelraid:kbstick2")
+
+            local kb3 = ItemStack("")
+            kb3:set_count(1)
+            kb3:set_name("jewelraid:kbstick3")
+            
+            local sticklevel = nil
+            if sender:get_inventory():contains_item("main", kb1) then
+              sticklevel = 1
+            elseif sender:get_inventory():contains_item("main", kb2) then
+              sticklevel = 2
+            elseif sender:get_inventory():contains_item("main", kb3) then
+                minetest.chat_send_player(sender:get_player_name(), "You cant upgrade your knockback stick any more than power 20")
+                return
+            else return end
+            if not sticklevel then return end
+			minetest.chat_send_all(sticklevel)
+	    	if wielded:get_name() == "jewelraid:kbstick" .. sticklevel then
+				minetest.chat_send_player(sender:get_player_name(), "Do not wield your knockback stick when attempting to upgrade it")
 				return
-			end
-			sender:get_inventory():remove_item("main", reqstack)
-			itemstack:set_count(1)
-			itemstack:set_name("jewelraid:kbstick")
+		  	end
+            local reqstack2 = ItemStack("")
+            reqstack2:set_count(1)
+            reqstack2:set_name("jewelraid:kbstick" .. tostring(sticklevel))
+            if not sender:get_inventory():contains_item("main", reqstack2) then
+                minetest.chat_send_player(sender:get_player_name(), "You need a knockback stick to buy this upgrade")
+                return
+            end
+            sender:get_inventory():remove_item("main", reqstack)
+            sender:get_inventory():remove_item("main", reqstack2)
+            itemstack:set_count(1)
+            itemstack:set_name("jewelraid:kbstick" .. tostring(sticklevel+1))
 		elseif fields.apple then
 			reqstack:set_count(1)
 			reqstack:set_name("default:gold_ingot")
