@@ -95,7 +95,7 @@ minetest.register_node("jewelraid:shop_item", {
 			sender:get_inventory():remove_item("main", reqstack)
 			itemstack:set_count(1)
 			itemstack:set_name("default:pick_diamond")
-		elseif fields.jumppotion then
+		elseif fields.speedpotion then
 			reqstack:set_count(3)
 			reqstack:set_name("default:gold_ingot")
 			if not sender:get_inventory():contains_item("main", reqstack) then
