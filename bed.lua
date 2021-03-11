@@ -78,15 +78,6 @@ minetest.register_node("jewelraid:jewel", {
    end,
 })
 
-minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
-	if newnode.name == "jewelraid:jewel" then
-    	if minetest.check_player_privs(placer:get_player_name(), {jewelraid_maps=true}) then return end
-    	minetest.set_node(pos, {name=oldnode.name})
-    	minetest.chat_send_player(placer:get_player_name(), "You arent allowed to place jewels")
-	end
-end)
-
-
 minetest.register_on_dignode(function(pos, oldnode, digger)
 	if oldnode.name == "jewelraid:jewel" then
 		minetest.set_node(pos, {name = "jewelraid:jewel"})
