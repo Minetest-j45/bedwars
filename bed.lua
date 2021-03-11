@@ -68,6 +68,8 @@ minetest.register_node("jewelraid:jewel", {
       if posteam == placerteam then
         jewelraid.beds[jewelraid.get_team_by_pos(pos)] = jewelraid.beds[jewelraid.get_team_by_pos(pos)] + 1
         itemstack:take_item()
+					
+	minetest.chat_send_all(minetest.colorize(jewelraid.str_to_colour(jewelraid.get_player_team(player:get_player_name())), player:get_player_name()) .. " raided and brought back a jewel successfully")
         return itemstack
       else
         minetest.chat_send_player(player:get_player_name(), "You can't give the enemy more jewels!")
@@ -103,7 +105,7 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 		if not jewelraid.beds[jewelraid.get_team_by_pos(pos)] then return end
 		jewelraid.beds[jewelraid.get_team_by_pos(pos)] = jewelraid.beds[jewelraid.get_team_by_pos(pos)] - 1
 		minetest.add_item(pos, "jewelraid:jewel")
-		minetest.chat_send_all("Team " .. minetest.colorize(jewelraid.str_to_colour(jewelraid.get_team_by_pos(pos)), jewelraid.get_team_by_pos(pos)) .. "'s jewel has been destroyed by " .. digger:get_player_name())
+		minetest.chat_send_all("Team " .. minetest.colorize(jewelraid.str_to_colour(jewelraid.get_team_by_pos(pos)), jewelraid.get_team_by_pos(pos)) .. "'s jewel has been raided by " .. digger:get_player_name())
 		minetest.sound_play("bed_destruction", {
 			pos = pos,
 			max_hear_distance = 100,
