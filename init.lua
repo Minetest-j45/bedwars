@@ -33,13 +33,13 @@ if #maps > 0 then
 	jewelraid.current_map = maps[math.random(1, #maps)]
 	
 	minetest.register_on_joinplayer(function(player)
-		    if not player then return end
-    			local meta = player:get_meta()
-   			meta:set_string("respawn_kb_immunity", "true")
-			minetest.after(5, function()
-				minetest.chat_send_player(player:get_player_name(), "Your respawn knockback immunity ended")
-				meta:set_string("respawn_kb_immunity", "false")
-    			end)
+		if not player then return end
+    		local meta = player:get_meta()
+   		meta:set_string("respawn_kb_immunity", "true")
+		minetest.after(5, function()
+			minetest.chat_send_player(player:get_player_name(), "Your respawn knockback immunity ended")
+			meta:set_string("respawn_kb_immunity", "false")
+    		end)
 		player:set_hp(20)
 		minetest.after(0, function(player)
 			local kbstick = ItemStack("jewelraid:kbstick1")
