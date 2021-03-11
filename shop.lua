@@ -38,7 +38,6 @@ minetest.register_node("jewelraid:shop_item", {
                 minetest.chat_send_player(sender:get_player_name(), "You need 8 gold to buy this item")
                 return
             end
-			minetest.chat_send_all(wielded:get_name())
             local kb1 = ItemStack("")
             kb1:set_count(1)
             kb1:set_name("jewelraid:kbstick1")
@@ -61,7 +60,6 @@ minetest.register_node("jewelraid:shop_item", {
                 return
             else return end
             if not sticklevel then return end
-			minetest.chat_send_all(sticklevel)
 	    	if wielded:get_name() == "jewelraid:kbstick" .. sticklevel then
 				minetest.chat_send_player(sender:get_player_name(), "Do not wield your knockback stick when attempting to upgrade it")
 				return
