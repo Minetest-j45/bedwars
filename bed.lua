@@ -1,4 +1,4 @@
-jewelraid.beds = {red = 20, blue = 20} -- 20 is initial number of beds
+jewelraid.beds = {red = 20, blue = 20} -- 20 is initial number of jewels
 
 jewelraid.str_to_colour = function(str)
 	local codes = {red = "#FF0000", blue = "#0000FF"}
@@ -7,50 +7,17 @@ end
 
 minetest.register_on_dieplayer(function(player)
 	minetest.chat_send_all(minetest.colorize(jewelraid.str_to_colour(jewelraid.get_player_team(player:get_player_name())), player:get_player_name()) .. " died")
-	jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] = jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] - 1
 end)
 
 minetest.register_on_respawnplayer(function(player)
-	local kbstick = ItemStack("jewelraid:kbstick1")
-	local itemstack = ItemStack("default:pick_steel")
-	player:set_wielded_item(kbstick)
-	player:get_inventory():add_item("main", itemstack)
-	if jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] <= 0 then
-		minetest.kick_player(player:get_player_name(), "You cannot respawn because your bed has been destroyed. Please wait for a new game to start.")
-		minetest.after(1, function()
-			local empty_teams = 0
-			local alive = {red = true, blue = true}
-			for k, v in pairs(jewelraid.teams) do
-				if #v == 0 then
-					empty_teams = empty_teams + 1
-					alive[k] = false
-			end
-			end
-			local last_team
-			for k, v in pairs(alive) do
-				if v then
-					last_team = k
-				end
-			end
-			if empty_teams == 1 then
-				minetest.chat_send_all("Team " .. minetest.colorize(jewelraid.str_to_colour(last_team), last_team) .. " has won!")
-				minetest.request_shutdown("Game has ended", false, 10) 
-			end
-		end, nil)
-	else
-		minetest.after(0, function(player)
-			player:set_pos(minetest.string_to_pos(jewelraid.get_map_by_name(jewelraid.current_map)[jewelraid.get_player_team(player:get_player_name())]))
-		end, player)
-	end
-	return true
-end)
-
-minetest.register_on_joinplayer(function(player)
-	minetest.after(1, function()
-		if jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] <= 0 then
-			minetest.kick_player(player:get_player_name(), "You cannot respawn because your bed has been destroyed. Please wait for a new game to start.")
-		end
-	end)
+    local kbstick = ItemStack("jewelraid:kbstick1")
+    local itemstack = ItemStack("default:pick_steel")
+    player:set_wielded_item(kbstick)
+    player:get_inventory():add_item("main", itemstack)
+    minetest.after(0, function(player)
+        player:set_pos(minetest.string_to_pos(jewelraid.get_map_by_name(jewelraid.current_map)[jewelraid.get_player_team(player:get_player_name())]))
+    end, player)
+    return true
 end)
 
 minetest.register_node("jewelraid:jewel", {
@@ -68,8 +35,8 @@ minetest.register_node("jewelraid:jewel", {
       if posteam == placerteam then
         jewelraid.beds[jewelraid.get_team_by_pos(pos)] = jewelraid.beds[jewelraid.get_team_by_pos(pos)] + 1
         itemstack:take_item()
-					
-	minetest.chat_send_all(minetest.colorize(jewelraid.str_to_colour(jewelraid.get_player_team(player:get_player_name())), player:get_player_name()) .. " raided and brought back a jewel successfully")
+		
+		minetest.chat_send_all(minetest.colorize(jewelraid.str_to_colour(jewelraid.get_player_team(player:get_player_name())), player:get_player_name()) .. " raided and brought back a jewel successfully")
         return itemstack
       else
         minetest.chat_send_player(player:get_player_name(), "You can't give the enemy more jewels!")
@@ -77,6 +44,7 @@ minetest.register_node("jewelraid:jewel", {
     end
    end,
 })
+
 
 minetest.register_on_dignode(function(pos, oldnode, digger)
 	if oldnode.name == "jewelraid:jewel" then
@@ -103,5 +71,14 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 			gain = 2.0,
 		})
 		jewelraid.ui_update()
+	end
+end)
+
+minetest.register_globalstep(function()
+	for _, player in ipairs(minetest.get_connected_players()) do
+		if jewelraid.beds[jewelraid.get_player_team(player:get_player_name())] <= 0 then
+			minetest.chat_send_all("Team " .. minetest.colorize(jewelraid.str_to_colour(jewelraid.get_player_team(player:get_player_name()))) .. " lost!")
+			minetest.request_shutdown("Game has ended! GG", false, 10)
+		end
 	end
 end)
