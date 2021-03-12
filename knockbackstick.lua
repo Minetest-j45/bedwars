@@ -33,6 +33,12 @@ minetest.calculate_knockback = function(player, hitter, time_from_last_punch, to
 	else
 		knockback_adaptor_respawn = 1
 	end
+	local hittermeta = hitter:get_meta()
+	if hittermeta:get_string("respawn_kb_immunity") == "true" then
+		hittermeta:set_string("respawn_kb_immunity", "false")
+		minetest.chat_send_player(hitter:get_player_name(), "Your respawn knockback immunity ended as you attacked someone")
+	end
+	
 	local final_knockback
 	if hitter:get_wielded_item():get_name() == "jewelraid:kbstick1" then
 		final_knockback = 10 * knockback_adaptor_respawn
@@ -48,4 +54,3 @@ minetest.calculate_knockback = function(player, hitter, time_from_last_punch, to
 	end
 	return 0
 end
-
