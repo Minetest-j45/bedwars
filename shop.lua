@@ -92,7 +92,26 @@ minetest.register_node("jewelraid:shop_item", {
 				minetest.chat_send_player(sender:get_player_name(), "You need 6 gold to buy this item")
 				return
 			end
+		    local steelpick = ItemStack("")
+			steelpick:set_count(1)
+			steelpick:set_name("default:pick_steel")
+   			local diapick = ItemStack("")
+			diapick:set_count(1)
+			diapick:set_name("default:pick_diamond")
+			if wielded:get_name() == "default:pick_steel" then
+				minetest.chat_send_player(sender:get_player_name(), "Do not wield your pickaxe when attempting to upgrade it")
+				return
+			end
+			if sender:get_inventory():contains_item("main", diapick) then
+				minetest.chat_send_player(sender:get_player_name(), "You cant get a better pickaxe than a diamond one")
+				return
+			end
+			if not sender:get_inventory():contains_item("main", steelpick) then
+				minetest.chat_send_player(sender:get_player_name(), "You need a pickaxe to buy this upgrade")
+				return
+			end
 			sender:get_inventory():remove_item("main", reqstack)
+			sender:get_inventory():remove_item("main", steelpick)
 			itemstack:set_count(1)
 			itemstack:set_name("default:pick_diamond")
 		elseif fields.speedpotion then
